@@ -2,6 +2,12 @@
     padding-top: 50px;
     }
     
-    img { 
+img { 
         margin: auto;
+        display: block;
     }
+
+a {
+    display: block;
+    margin: auto;
+}
