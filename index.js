@@ -22,6 +22,7 @@ inquirer
     <html lang="en">
     <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,41 +42,48 @@ inquirer
     const profile = profileInfo.html_url
     const repos = profileInfo.public_repos
     const followers = profileInfo.followers
-    const starredURL = profileInfo.starred_url
+    let starredURL = profileInfo.starred_url
     const following = profileInfo.following
     const bio = profileInfo.bio
     const userLocation = `https://www.google.com/maps/place/${profileInfo.location}`
     const blog = profileInfo.blog
     
+    starredURL = starredURL.substring(0, starredURL.length-15)
     fs.appendFileSync("index.html", 
-    `\n<h1 style="text-align: center">${user}'s Developer Profile</h1>
+    `\n<h1>${user}'s Developer Profile</h1>
     <img src="${image}" class="rounded-pill" alt="Profile Pic">
     
        
         
                 
-            
-              <p style="text-align: center;" id="follow">Followers: ${followers} || Following: ${following}</p>
+    <h2 class="text-wrap" id="follow">${bio}</h2>
+              <h4>Followers: ${followers} || Following: ${following}</h4>
           
-          <p style="text-align: center"># of Repositories: ${repos}</p>
+          <h3># of Repositories: ${repos}</h4>
        
         
       
-          <p style="text-align: center">${bio}</p>
+          
        
-
+<hr class="my-4">
+<hr class="my-4">
+<hr class="my-4">
                 
-                <a href="${ blog}"><p style="text-align: center">Blog</p></a>
-              
-                    <a href="${userLocation}"><p style="text-align: center">${userLocation}</p></a>
-                
-                  <a href="${profile}"><p style="text-align: center">${profile}</p></a>
-           
-    </div>   
-     
-</body>
-</html>`)
+                <a href="${ blog}"><h4>Blog<h4></a>
+              <br>
+                    <a href="${userLocation}"><h4>${userLocation}</h4></a>
+                <br>
+                  <a href="${profile}"><h4>${profile}</h4></a>`)
 
+return axios.get(starredURL)
+})
+.then((res) => {
+  const starred = res.data.length 
+  fs.appendFileSync("index.html", `\n<br>
+  <h3>Starred Repos: ${ starred }</h3>  
+  </div>   
+  </body>
+  </html>`)
     const html = fs.readFileSync("index.html", "utf8")
     pdf.create(html, options).toFile("profile.pdf", (err) => {
       if (err) {
@@ -83,5 +91,5 @@ inquirer
       }
       console.log("PDF created!")
     })
-  })
+})
   .catch((err) => console.error(err))
