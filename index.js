@@ -56,7 +56,7 @@ inquirer
        
         
                 
-    <h2 class="text-wrap" id="follow" style="font-family: 'Lobster', cursive;">${bio}</h2>
+    <h2 class="text-wrap" id="follow" style="font-family: 'Lobster', cursive;>${bio}</h2>
               <h4>Followers: ${followers} || Following: ${following}</h4>
           
           <h3># of Repositories: ${repos}</h4>
