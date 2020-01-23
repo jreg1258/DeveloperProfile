@@ -14,4 +14,10 @@ a {
 
 .jumbotron {
     text-align: center;
+    width: 800px;
+    margin: auto;
+}
+
+body,html,.jumbotron {
+    height: auto;
 }
